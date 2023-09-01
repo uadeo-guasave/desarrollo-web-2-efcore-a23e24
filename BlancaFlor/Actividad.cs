@@ -1,3 +1,5 @@
+using HolaMundo.Damaris;
+
 namespace HolaMundo.BlancaFlor;
 
 class Actividad
@@ -8,6 +10,7 @@ class Actividad
     public string? EjeTematico { get; set; }
     public string? Subeje { get; set; }
     public string? Descripcion { get; set; }
+    public Docente Docente { get; set; }
 
     public Actividad()
     {
