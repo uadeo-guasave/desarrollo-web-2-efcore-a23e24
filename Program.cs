@@ -8,8 +8,11 @@ CrearBaseDeDatos();
 
 static void CrearBaseDeDatos()
 {
-    var db = new SqliteDbContext();
-    db.Database.EnsureCreated();
+    // Resources tienen métodos para abrir y cerrar acciones
+    using (var db = new SqliteDbContext())
+    {
+        db.Database.EnsureCreated();
+    }
 }
 
 static void CodigoAnterior()
