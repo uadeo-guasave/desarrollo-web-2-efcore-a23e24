@@ -16,4 +16,13 @@ class SqliteDbContext : DbContext
         optionsBuilder.UseSqlite("Data source=Db/BdControlAct.db");
         base.OnConfiguring(optionsBuilder);
     }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<Actividad>(act => 
+            act.HasOne<Docente>(a => a.Docente)
+                .WithMany(d => d.Actividades));
+        
+        base.OnModelCreating(modelBuilder);
+    }
 }
