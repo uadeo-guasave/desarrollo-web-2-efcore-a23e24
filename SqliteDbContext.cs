@@ -22,6 +22,10 @@ class SqliteDbContext : DbContext
         modelBuilder.Entity<Actividad>(act => 
             act.HasOne<Docente>(a => a.Docente)
                 .WithMany(d => d.Actividades));
+
+        modelBuilder.Entity<Docente>(doc =>
+            doc.HasMany<Actividad>(d => d.Actividades)
+                .WithOne(a => a.Docente));
         
         base.OnModelCreating(modelBuilder);
     }
