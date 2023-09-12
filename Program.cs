@@ -4,7 +4,23 @@ using HolaMundo.BlancaFlor;
 using HolaMundo.Damaris;
 
 // CodigoAnterior();
-CrearBaseDeDatos();
+// CrearBaseDeDatos();
+RegistrarPrimerDocente();
+
+static void RegistrarPrimerDocente()
+{
+    var docente = new Docente
+    {
+        NumeroDeEmpleado = 123,
+        Nombres = "Jose Luis",
+        Apellidos = "Gaxiola Castro"
+    };
+    using (var db = new SqliteDbContext())
+    {
+        db.Docentes.Add(docente);
+        db.SaveChanges();
+    }
+}
 
 static void CrearBaseDeDatos()
 {
