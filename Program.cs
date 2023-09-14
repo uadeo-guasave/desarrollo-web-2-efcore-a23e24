@@ -1,11 +1,75 @@
 ﻿// See https://aka.ms/new-console-template for more information
+
 using HolaMundo;
 using HolaMundo.BlancaFlor;
 using HolaMundo.Damaris;
 
 // CodigoAnterior();
+// EliminarBaseDeDatos();
 // CrearBaseDeDatos();
-RegistrarPrimerDocente();
+// RegistrarPrimerDocente();
+var docenteId = 123;
+var docente = BuscarDocentePorNumeroDeEmpleado(docenteId);
+if (docente is null)
+{
+    Console.WriteLine($"Docente con el id: {docenteId} no encontrado");
+}
+else
+{
+    Console.WriteLine($"Docente {docente.Nombres} encontrado con id: {docente.Id}");
+}
+
+RegistrarDosActividades(docente.Id);
+
+static void RegistrarDosActividades(int docenteId)
+{
+    // definir las actividades
+    var actividades = new List<Actividad>
+    {
+        new Actividad
+        {
+            FechaDeRegistro = DateTime.Now,
+            DocenteId = docenteId,
+            EjeTematico = "Eje 1",
+            Subeje = "Subeje 1.1",
+            Descripcion = "Descripción 1.1"
+        },
+        new Actividad
+        {
+            FechaDeRegistro = DateTime.Now,
+            DocenteId = docenteId,
+            EjeTematico = "Eje 1",
+            Subeje = "Subeje 1.2",
+            Descripcion = "Descripción 1.2"
+        }
+    };
+    using (var db = new SqliteDbContext())
+    {
+        // agregar las actividades
+        db.Actividades.AddRange(actividades);
+        // guardar los cambios
+        db.SaveChanges();
+    }
+}
+
+static Docente? BuscarDocentePorNumeroDeEmpleado(int numeroDeEmpleado)
+{
+    using (var db = new SqliteDbContext())
+    {
+        var docente = db.Docentes
+            .FirstOrDefault(d => d.NumeroDeEmpleado == numeroDeEmpleado);
+        return docente;
+    }
+}
+
+
+static void EliminarBaseDeDatos()
+{
+    using (var db = new SqliteDbContext())
+    {
+        db.Database.EnsureDeleted();
+    }
+}
 
 static void RegistrarPrimerDocente()
 {
@@ -17,6 +81,7 @@ static void RegistrarPrimerDocente()
     };
     using (var db = new SqliteDbContext())
     {
+        // equivalente a INSERT de SQL
         db.Docentes.Add(docente);
         db.SaveChanges();
     }
@@ -84,4 +149,3 @@ static void CodigoAnterior()
         Console.WriteLine(actividad.Descripcion);
     }
 }
-

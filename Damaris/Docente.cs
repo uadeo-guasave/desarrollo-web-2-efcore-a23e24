@@ -19,12 +19,6 @@ class Docente
     [Required, MaxLength(50)]
     public string? Apellidos { get; set; }
 
-    [NotMapped]
-    public List<Actividad> Actividades { get; set; }
-
-    public Docente()
-    {
-        this.Id = new Random().Next(1,100);
-        this.Actividades = new List<Actividad>();
-    }
+    [NotMapped] 
+    public List<Actividad> Actividades { get; set; } = new();
 }
