@@ -3,12 +3,52 @@
 using HolaMundo;
 using HolaMundo.BlancaFlor;
 using HolaMundo.Damaris;
+using Microsoft.EntityFrameworkCore;
 
 // CodigoAnterior();
 // EliminarBaseDeDatos();
 // CrearBaseDeDatos();
 // RegistrarPrimerDocente();
-RegistrarDosActividades();
+// RegistrarDosActividades();
+// BuscarDocentePorId(1);
+MostrarActividadesDeUnDocente(1);
+
+static void MostrarActividadesDeUnDocente(int docenteId)
+{
+    using (var db = new SqliteDbContext())
+    {
+        var actividades = db.Actividades
+            .Where(a => a.DocenteId == docenteId)
+            .Include(a => a.Docente)
+            .ToList();
+        if (actividades.Count > 0)
+        {
+            foreach (var actividad in actividades)
+            {
+                Console.WriteLine(
+                    $"Actividad {actividad.Id}: {actividad.Descripcion}, Docente: {actividad.Docente.Nombres}");
+            }
+        }
+        else
+        {
+            Console.WriteLine("No se encontraron actividades");
+        }
+    }
+}
+
+static void BuscarDocentePorId(int id)
+{
+    using (var db = new SqliteDbContext())
+    {
+        var docente = db.Docentes.Find(id);
+        if (docente is null)
+        {
+            throw new Exception($"Docente no encontrado con el id {id}");
+        }
+
+        Console.WriteLine($"Docente {docente.Nombres} encontrado");
+    }
+}
 
 static void RegistrarDosActividades()
 {

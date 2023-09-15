@@ -21,3 +21,9 @@ values ('2023-09-14',1,'Eje 1','Subeje 1.1','Descripción 1.1'),
 
 
 select * from Actividades;
+
+
+select a.Id, a.Descripcion, d.Nombres from Actividades a
+                           join Docentes d
+                           on a.DocenteId = d.Id
+where a.DocenteId = 1;
