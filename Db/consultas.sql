@@ -18,3 +18,6 @@ select id from Docentes where NumeroDeEmpleado=123;
 insert into Actividades (fechaderegistro, docenteid, ejetematico, subeje, descripcion)
 values ('2023-09-14',1,'Eje 1','Subeje 1.1','Descripción 1.1'),
        ('2023-09-14',1,'Eje 1','Subeje 1.2','Descripción 1.2');
+
+
+select * from Actividades;

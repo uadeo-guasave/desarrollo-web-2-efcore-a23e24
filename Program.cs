@@ -8,28 +8,28 @@ using HolaMundo.Damaris;
 // EliminarBaseDeDatos();
 // CrearBaseDeDatos();
 // RegistrarPrimerDocente();
-var docenteId = 123;
-var docente = BuscarDocentePorNumeroDeEmpleado(docenteId);
-if (docente is null)
-{
-    Console.WriteLine($"Docente con el id: {docenteId} no encontrado");
-}
-else
-{
-    Console.WriteLine($"Docente {docente.Nombres} encontrado con id: {docente.Id}");
-}
+RegistrarDosActividades();
 
-RegistrarDosActividades(docente.Id);
-
-static void RegistrarDosActividades(int docenteId)
+static void RegistrarDosActividades()
 {
+    var numEmpleado = 123;
+    Docente docente;
+    try
+    {
+        docente = BuscarDocentePorNumeroDeEmpleado(numEmpleado);
+    }
+    catch (NullReferenceException ex)
+    {
+        throw new Exception(ex.Message);
+    }
+
     // definir las actividades
     var actividades = new List<Actividad>
     {
         new Actividad
         {
             FechaDeRegistro = DateTime.Now,
-            DocenteId = docenteId,
+            DocenteId = docente.Id,
             EjeTematico = "Eje 1",
             Subeje = "Subeje 1.1",
             Descripcion = "Descripción 1.1"
@@ -37,7 +37,7 @@ static void RegistrarDosActividades(int docenteId)
         new Actividad
         {
             FechaDeRegistro = DateTime.Now,
-            DocenteId = docenteId,
+            DocenteId = docente.Id,
             EjeTematico = "Eje 1",
             Subeje = "Subeje 1.2",
             Descripcion = "Descripción 1.2"
@@ -52,13 +52,14 @@ static void RegistrarDosActividades(int docenteId)
     }
 }
 
-static Docente? BuscarDocentePorNumeroDeEmpleado(int numeroDeEmpleado)
+static Docente BuscarDocentePorNumeroDeEmpleado(int numeroDeEmpleado)
 {
     using (var db = new SqliteDbContext())
     {
         var docente = db.Docentes
             .FirstOrDefault(d => d.NumeroDeEmpleado == numeroDeEmpleado);
-        return docente;
+        return docente ??
+               throw new NullReferenceException($"Docente no encontrado con el número de empleado {numeroDeEmpleado}");
     }
 }
 

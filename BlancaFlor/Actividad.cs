@@ -25,5 +25,5 @@ class Actividad
     public string? Descripcion { get; set; }
 
     [NotMapped]
-    public Docente Docente { get; set; } = new();
+    public Docente? Docente { get; set; }
 }
