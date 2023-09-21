@@ -27,3 +27,22 @@ select a.Id, a.Descripcion, d.Nombres from Actividades a
                            join Docentes d
                            on a.DocenteId = d.Id
 where a.DocenteId = 1;
+
+-- eliminar un registro de actividades
+select id from Actividades
+          into @docenteId
+where DocenteId = 1
+limit 1;
+
+delete from Actividades
+where Id = @docenteId;
+
+
+
+
+
+
+
+
+
+

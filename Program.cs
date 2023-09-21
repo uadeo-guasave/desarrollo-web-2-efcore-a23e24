@@ -11,7 +11,26 @@ using Microsoft.EntityFrameworkCore;
 // RegistrarPrimerDocente();
 // RegistrarDosActividades();
 // BuscarDocentePorId(1);
-MostrarActividadesDeUnDocente(1);
+// MostrarActividadesDeUnDocente(1);
+EliminarUnaActividad();
+
+static void EliminarUnaActividad()
+{
+    using (var db = new SqliteDbContext())
+    {
+        var actividad = db.Actividades.Find(1);
+        if (actividad is null)
+        {
+            Console.WriteLine("Registro no existente");
+        }
+        else
+        {
+            db.Remove(actividad);
+            db.SaveChanges();
+        }
+    }
+}
+
 
 static void MostrarActividadesDeUnDocente(int docenteId)
 {
