@@ -12,7 +12,27 @@ using Microsoft.EntityFrameworkCore;
 // RegistrarDosActividades();
 // BuscarDocentePorId(1);
 // MostrarActividadesDeUnDocente(1);
-EliminarUnaActividad();
+// EliminarUnaActividad();
+// git pull origin main --allow-unrelated-histories
+// git push origin main
+ActualizarUnaActividad();
+
+static void ActualizarUnaActividad()
+{
+    var actividadId = 2;
+    using (var db = new SqliteDbContext())
+    {
+        var actividad = db.Actividades.Find(actividadId);
+        if (actividad is not null)
+        {
+            actividad.EjeTematico = "Acceso a Datos";
+            actividad.Subeje = "Entity Framework";
+            actividad.Descripcion = "Operaciones de base de datos";
+            db.Update(actividad);
+            db.SaveChanges();
+        }
+    }
+}
 
 static void EliminarUnaActividad()
 {

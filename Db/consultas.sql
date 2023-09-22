@@ -38,7 +38,13 @@ delete from Actividades
 where Id = @docenteId;
 
 
-
+-- actualizar datos de una actividad
+update Actividades 
+set EjeTematico = '?',
+    Subeje = '?',
+    Descripcion = '?'
+where Id = ?;
+                    
 
 
 
